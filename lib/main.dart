@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mec_game_project/hit_a_mole.dart';
 
 void main() {
   runApp(const MyApp());
@@ -63,7 +64,12 @@ class App extends StatelessWidget {
                   ),
                   primary: Theme.of(context).colorScheme.secondary,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => GameArea()),
+                  );
+                },
                 child: const Text('Play'),
               ),
             ),
