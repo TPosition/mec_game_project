@@ -3,13 +3,14 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:sa_v1_migration/sa_v1_migration.dart';
+import 'package:animated_background/animated_background.dart';
 
 class GameArea extends StatefulWidget {
   @override
   State<GameArea> createState() => _GameAreaState();
 }
 
-class _GameAreaState extends State<GameArea> {
+class _GameAreaState extends State<GameArea> with TickerProviderStateMixin {
   int marks = 0;
 
   updateMarks() {
@@ -18,17 +19,42 @@ class _GameAreaState extends State<GameArea> {
     });
   }
 
+  ParticleOptions particleOptions = ParticleOptions(
+    image: Image.asset('assets/star_icon.png'),
+    baseColor: Colors.blue,
+    spawnOpacity: 0.0,
+    opacityChangeRate: 0.25,
+    minOpacity: 0.0,
+    maxOpacity: 1.0,
+    spawnMinSpeed: 30.0,
+    spawnMaxSpeed: 70.0,
+    spawnMinRadius: 7.0,
+    spawnMaxRadius: 15.0,
+    particleCount: 40,
+  );
+
+  var particlePaint = Paint()
+    ..style = PaintingStyle.stroke
+    ..strokeWidth = 1.0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Counting(
-            marks: marks,
-          ),
-          ...Iterable.generate(3).map((i) => rowWith2Moles(updateMarks)),
-        ],
+      body: AnimatedBackground(
+        behaviour: RandomParticleBehaviour(
+          options: particleOptions,
+          paint: particlePaint,
+        ),
+        vsync: this,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Counting(
+              marks: marks,
+            ),
+            ...Iterable.generate(3).map((i) => rowWith2Moles(updateMarks)),
+          ],
+        ),
       ),
     );
   }
