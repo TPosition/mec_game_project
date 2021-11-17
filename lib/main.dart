@@ -22,15 +22,18 @@ class MyApp extends StatelessWidget {
       ),
       home: const App(
         chance: 1,
+        marks: 0,
       ),
     );
   }
 }
 
 class App extends StatefulWidget {
-  const App({Key? key, required this.chance}) : super(key: key);
+  const App({Key? key, required this.chance, required this.marks})
+      : super(key: key);
 
   final int chance;
+  final int marks;
 
   @override
   State<App> createState() => _AppState();
@@ -56,7 +59,7 @@ class _AppState extends State<App> {
                 MaterialPageRoute(
                     builder: (context) => RewardPage(
                           chance: widget.chance,
-                          marks: 10,
+                          marks: widget.marks,
                         )),
               );
             },
@@ -88,7 +91,11 @@ class _AppState extends State<App> {
                     : () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => GameArea()),
+                          MaterialPageRoute(
+                              builder: (context) => GameArea(
+                                    marks: widget.marks,
+                                    chance: widget.chance,
+                                  )),
                         );
                       },
                 child: const Text('Play'),

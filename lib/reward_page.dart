@@ -35,6 +35,7 @@ class _RewardPageState extends State<RewardPage> {
           context,
           MaterialPageRoute(
               builder: (context) => App(
+                    marks: widget.marks,
                     chance: widget.chance,
                   )));
       return false;
@@ -125,7 +126,7 @@ class _RewardPageState extends State<RewardPage> {
               }),
             ),
             Text(
-              "Or convert to RM ${widget.marks * 0.05}",
+              "Or convert to RM ${(widget.marks * 0.05).toStringAsFixed(2)}",
               style: const TextStyle(
                 decoration: TextDecoration.underline,
               ),

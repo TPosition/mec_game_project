@@ -2,20 +2,27 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:mec_game_project/main.dart';
 import 'package:sa_v1_migration/sa_v1_migration.dart';
 import 'package:animated_background/animated_background.dart';
 
 class GameArea extends StatefulWidget {
+  GameArea({Key? key, required this.chance, required this.marks})
+      : super(key: key);
+
+  final int chance;
+  final int marks;
+
   @override
   State<GameArea> createState() => _GameAreaState();
 }
 
 class _GameAreaState extends State<GameArea> with TickerProviderStateMixin {
-  int marks = 0;
+  int score = 0;
 
   updateMarks() {
     setState(() {
-      marks++;
+      score++;
     });
   }
 
@@ -50,7 +57,8 @@ class _GameAreaState extends State<GameArea> with TickerProviderStateMixin {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             Counting(
-              marks: marks,
+              chance: widget.chance,
+              marks: widget.marks + score,
             ),
             ...Iterable.generate(3).map((i) => rowWith2Moles(updateMarks)),
           ],
@@ -73,9 +81,11 @@ class _GameAreaState extends State<GameArea> with TickerProviderStateMixin {
 class Counting extends StatefulWidget {
   const Counting({
     required this.marks,
+    required this.chance,
     Key? key,
   }) : super(key: key);
   final int marks;
+  final int chance;
 
   @override
   State<Counting> createState() => _CountingState();
@@ -93,6 +103,13 @@ class _CountingState extends State<Counting> {
         if (_start == 0) {
           setState(() {
             timer.cancel();
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => App(
+                          marks: widget.marks,
+                          chance: widget.chance - 1,
+                        )));
           });
         } else {
           setState(() {
