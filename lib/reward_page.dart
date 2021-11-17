@@ -26,8 +26,11 @@ class _RewardPageState extends State<RewardPage> {
   @override
   Widget build(BuildContext context) {
     const List<Item> listItem = [
-      Item("offer", 5, Icon(Icons.local_offer)),
-      Item("ofwew", 30, Icon(Icons.local_offer))
+      Item("5% off voucher", 20, Icon(Icons.local_offer)),
+      Item("25% off voucher", 50, Icon(Icons.local_offer)),
+      Item("50% off voucher", 90, Icon(Icons.local_offer)),
+      Item("Free shipping", 30, Icon(Icons.local_shipping)),
+      Item("Mystery Gift", 80, Icon(Icons.card_giftcard)),
     ];
 
     Future<bool> backPress() async {

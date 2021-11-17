@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: const App(
-        chance: 1,
+        chance: 3,
         marks: 0,
       ),
     );
@@ -105,16 +105,19 @@ class _AppState extends State<App> {
               "Total Chance: ${widget.chance.toString()}",
               style: const TextStyle(color: Colors.white),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  "1 mark = 1",
-                  style: TextStyle(color: Colors.white),
-                ),
-                SizedBox(
-                    height: 40, child: Image.asset('assets/coin_icon.png')),
-              ],
+            Padding(
+              padding: const EdgeInsets.only(left: 38),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "1 mark = 1",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  SizedBox(
+                      height: 40, child: Image.asset('assets/coin_icon.png')),
+                ],
+              ),
             ),
           ],
         ),
