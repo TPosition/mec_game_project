@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mec_game_project/hit_a_mole.dart';
+import 'package:mec_game_project/reward_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,14 +20,23 @@ class MyApp extends StatelessWidget {
           secondary: Colors.orange.shade300,
         ),
       ),
-      home: const App(),
+      home: const App(
+        chance: 1,
+      ),
     );
   }
 }
 
-class App extends StatelessWidget {
-  const App({Key? key}) : super(key: key);
+class App extends StatefulWidget {
+  const App({Key? key, required this.chance}) : super(key: key);
 
+  final int chance;
+
+  @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +50,16 @@ class App extends StatelessWidget {
           IconButton(
             icon: Image.asset('assets/reward_icon.png'),
             iconSize: 50,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => RewardPage(
+                          chance: widget.chance,
+                          marks: 10,
+                        )),
+              );
+            },
           )
         ],
       ),
@@ -64,18 +83,20 @@ class App extends StatelessWidget {
                   ),
                   primary: Theme.of(context).colorScheme.secondary,
                 ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => GameArea()),
-                  );
-                },
+                onPressed: widget.chance == 0
+                    ? null
+                    : () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => GameArea()),
+                        );
+                      },
                 child: const Text('Play'),
               ),
             ),
-            const Text(
-              "Total Chance: 2",
-              style: TextStyle(color: Colors.white),
+            Text(
+              "Total Chance: ${widget.chance.toString()}",
+              style: const TextStyle(color: Colors.white),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
