@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mec_game_project/hit_a_mole.dart';
 import 'package:mec_game_project/reward_page.dart';
+import 'package:share_plus/share_plus.dart';
 
 void main() {
   runApp(const MyApp());
@@ -8,8 +9,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -51,6 +50,22 @@ class _AppState extends State<App> {
             onPressed: () {}),
         actions: [
           IconButton(
+            icon: const Icon(Icons.share),
+            iconSize: 50,
+            onPressed: () {
+              Share.share("Text");
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => App(
+                    chance: widget.chance + 1,
+                    marks: widget.marks,
+                  ),
+                ),
+              );
+            },
+          ),
+          IconButton(
             icon: Image.asset('assets/reward_icon.png'),
             iconSize: 50,
             onPressed: () {
@@ -63,7 +78,7 @@ class _AppState extends State<App> {
                         )),
               );
             },
-          )
+          ),
         ],
       ),
       body: Container(
